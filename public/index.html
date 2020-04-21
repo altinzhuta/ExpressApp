@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="jquery-3.5.0.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   
+    <div id="navtop" class="topnav">
+        <a id="home" class="active" href="/users">Home</a>
+        <a id="news" href="/events">News</a>
+        <a>Contact</a>
+        <a>About</a>
+    </div>
+
+    <input type="button" value="Login with email">
+    <input id='btn' type='button' value="Get one"></input>
+    <input id='btn2' type='button' value="Get all"></input>
+    <input id='btn3' type='button' value="Get all"></input>
+    <input id='btn4' type='button' value="Get one"></input>
+
+    <div id='results'>(Ergebnis gleich hier...)</div>
+    <div id='results2'>(Ergebnis gleich hier...)</div>
+    <div id='results3'>(Ergebnis gleich hier...)</div>
+    <div id='results4'>(Ergebnis gleich hier...)</div>
+
+    <script>
+        // id from url todo *****
+        let id1 = '5e98d9b6a2fe443858997e7e';
+        let id2 = '5e9926bd866a611a7080ee40';
+        $('#btn').click(function () {
+            $.ajax({
+                beforeSend: function () {
+                    $('#results').html('Rechne auf Server...');
+                },
+                type: 'GET', url: `/users/${id1}`, success: function (data) {
+                    $('#results').text("user name with id- " + id1 + " : " + data.name);
+                }
+            });
+        });
+        $('#btn2').click(function () {
+            $.ajax({
+                beforeSend: function () {
+                    $('#results2').html('Rechne auf Server...');
+                },
+                type: 'GET', url: `/users`, success: function (data) {
+                    $('#results2').text("number of users : " + data.length);
+                }
+            });
+        });
+        $('#btn3').click(function () {
+            $.ajax({
+                beforeSend: function () {
+                    $('#results3').html('Rechne auf Server...');
+                },
+                type: 'GET', url: `/events`, success: function (data) {
+                    $('#results3').text("number of events : " + data.length);
+                }
+            });
+        });
+        $('#btn4').click(function () {
+            $.ajax({
+                beforeSend: function () {
+                    $('#results4').html('Rechne auf Server...');
+                },
+                type: 'GET', url: `/events/${id2}`, success: function (data) {
+                    $('#results4').text("eventname mit " + id2 + " : " + data.name);
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+
+</html>
