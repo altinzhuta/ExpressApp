@@ -46,3 +46,13 @@ $(document).ready(function () {
         });
     });
 });
+
+/* 
+
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/altinzhuta/crypt.git
+git push -u origin master 
+
+*/
