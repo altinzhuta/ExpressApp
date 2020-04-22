@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {eventSchema} = require('./eventDB')
+const { eventSchema } = require('./eventDB')
 const dev = require("debug")("development");
 const bcrypt = require('bcrypt')
 
@@ -60,7 +60,7 @@ async function getUserFromDB(id) {
 }
 
 async function deleteFromDB(id) {
-    let oldUser =await User.findById(id)
+    let oldUser = await User.findById(id)
     return new Promise((result, reject) => {
         if (!oldUser)
             reject(new Error("error deleting document in DB"))
