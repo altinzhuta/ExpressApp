@@ -1,39 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
 
-<head>
-    <script src="jquery-3.5.0.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<body>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-    <div id="navtop" class="topnav">
-        <a id="home" class="active" href="/users">Home</a>
-        <a id="news" href="/events">News</a>
-        <a>Contact</a>
-        <a>About</a>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Make the image fully responsive */
+      .carousel-inner img {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="demo" class="carousel slide" data-ride="carousel">
+      <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+      </ul>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="vulkan.jpg" alt="Event" width="1100" height="500" />
+          <div class="carousel-caption">
+            <h3 id="h3_1"></h3>
+            <p id="p1"></p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="vulkan.jpg" alt="Event" width="1100" height="500" />
+          <div class="carousel-caption">
+            <h3 id="h3_2"></h3>
+            <p id="p2"></p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="vulkan.jpg" alt="Event" width="1100" height="500" />
+          <div class="carousel-caption">
+            <h3 id="h3_3"></h3>
+            <p id="p3"></p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
     </div>
-
-    <input type="button" value="Login with email">
-    <input id='btn' type='button' value="Get one">
-    <input id='btn2' type='button' value="Get all">
-    <input id='btn3' type='button' value="Get all">
-    <input id='btn4' type='button' value="Get one">
-
-    <div id='results'>(Ergebnis gleich hier...)</div>
-    <div id='results2'>(Ergebnis gleich hier...)</div>
-    <div id='results3'>(Ergebnis gleich hier...)</div>
-    <div id='results4'>(Ergebnis gleich hier...)</div>
-
-    <script src="index.js">
-
-    </script>
-
-</body>
-
-
+    <script src="index.js"></script>
+  </body>
 </html>
