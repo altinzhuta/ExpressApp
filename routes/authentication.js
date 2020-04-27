@@ -8,7 +8,6 @@ function authentication(req, res, next) {
   try {
     const userToken = jsonwebToken.verify(token, config.get("webTokenSalt"));
     req.user = userToken;
-    console.log(userToken);
     next();
   } catch (error) {
     res.status(400).send("TokenError");
