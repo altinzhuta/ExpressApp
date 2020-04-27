@@ -1,90 +1,113 @@
-const mongoose = require('mongoose')
-const { eventSchema } = require('./eventDB')
+const mongoose = require("mongoose");
+const config = require("config");
+
+const { eventSchema } = require("./eventDB");
 const dev = require("debug")("development");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 3
+  name: {
+    type: String,
+    required: true,
+    minlength: 3,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  email: {
+    type: String,
+    required: true,
+    minlength: 5,
+  },
+  read: Boolean,
+  write: Boolean,
+  passwordHash: String,
+  inventory: Array,
+  price: Number,
+  events: [eventSchema],
+  admin: Boolean,
+  discount: {
+    type: Number,
+    required: function () {
+      return this.premiumUser;
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    passwordHash: String,
-    password: String,
-    inventory: Array,
-    price: Number,
-    events: [eventSchema],
-    premiumUser: Boolean,
-    discount: {
-        type: Number,
-        required: function () { return this.premiumUser }
-    }
-})
+  },
+});
 
-const User = mongoose.model('users', userSchema);
+const User = mongoose.model("users", userSchema);
 
-async function createUserInDB(req, id) {
-    const user = await User.findById(id);
-    const salt = await bcrypt.genSalt(10);
-    genPasswordHash = await bcrypt.hash(req.password, salt);
-    return new Promise((result, reject) => {
-        if (user.name != req.name)
-            result(new User({ name: req.name, password: req.password, passwordHash: genPasswordHash }).save())
-        else
-            reject(new Error('Already there, did you mean to update?'))
-    });
+async function createUserInDB(req) {
+  const user = await User.find({ name: req.name });
+  const salt = await bcrypt.genSalt(config.get("salt"));
+  const passwordHash = await bcrypt.hash(req.password, salt);
+
+  return new Promise((result, reject) => {
+    if (!user[0])
+      result(
+        new User({
+          name: req.name,
+          passwordHash: passwordHash,
+          email: req.email,
+        }).save()
+      );
+    else reject(new Error("Already there, did you mean to update?"));
+  });
 }
 
 async function getUsersFromDB() {
-    let users = await User.find({});
-    return new Promise((result, reject) => {
-        if (users.length > 0)
-            result(users);
-        else
-            reject(new Error('either empty or db offline'))
-    });
+  const users = await User.find({});
+  return new Promise((result, reject) => {
+    if (users.length > 0) result(users);
+    else reject(new Error("either empty or db offline"));
+  });
 }
 
 async function getUserFromDB(id) {
-    const users = await User.findById(id);
-    return new Promise((result, reject) => {
-        if (!users)
-            reject(new Error("Error deleting document in DB"))
-        else
-            result(users)
-    });
+  const users = await User.findById(id);
+  return new Promise((result, reject) => {
+    if (!users) reject(new Error("Error deleting document in DB"));
+    else result(users);
+  });
 }
 
 async function deleteFromDB(id) {
-    let oldUser = await User.findById(id)
-    return new Promise((result, reject) => {
-        if (!oldUser)
-            reject(new Error("error deleting document in DB"))
-        else
-            result(User.findByIdAndRemove(id))
-    })
+  let oldUser = await User.findById(id);
+  return new Promise((result, reject) => {
+    if (!oldUser) reject(new Error("error deleting document in DB"));
+    else result(User.findByIdAndRemove(id));
+  });
 }
 
 async function updateInDB(req, id) {
-    const salt = await bcrypt.genSalt(10);
-    genPasswordHash = await bcrypt.hash(req.password, salt);
-    return new Promise((result, reject) => {
-        if (!User.findById(id))
-            reject(new Error("Error updating document in DB"))
-        else
-            result(User.findByIdAndUpdate(id, {
-                $set: {
-                    name: req.name,
-                    password: req.password,
-                    passwordHash: genPasswordHash
-                }
-            }, { new: true }));
-    });
+  const user = await User.findById(id);
+  const validPassword = await bcrypt.compare(req.password, user.passwordHash);
+  const salt = await bcrypt.genSalt(config.get("salt"));
+  const passwordHash = await bcrypt.hash(req.password, salt);
+  return new Promise((result, reject) => {
+    if (!validPassword) reject(new Error("Error updating document in DB"));
+    else
+      result(
+        User.findByIdAndUpdate(
+          id,
+          {
+            $set: {
+              name: req.name,
+              passwordHash: passwordHash,
+              email: req.email,
+            },
+          },
+          { new: true }
+        )
+      );
+  });
 }
 
-
-module.exports = { getUserFromDB, getUsersFromDB, deleteFromDB, updateInDB, createUserInDB, userSchema };
+module.exports = {
+  getUserFromDB,
+  getUsersFromDB,
+  deleteFromDB,
+  updateInDB,
+  createUserInDB,
+  userSchema,
+};

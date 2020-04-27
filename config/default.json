@@ -1,7 +1,6 @@
 {
-"name":"Express Web App",
-"server": "localhost:3000"
-
-
-
+  "name": "Express Web App",
+  "server": "localhost:3000",
+  "salt": 10,
+  "webTokenSalt": "jwtPrivate"
 }

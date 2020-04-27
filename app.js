@@ -7,8 +7,8 @@ const config = require("config");
 process.env.DEBUG = "development";
 const dev = require("debug")("development");
 
+const login = require("./routes/loginRoute");
 const users = require("./routes/usersRoute");
-
 const event = require("./routes/eventRoute");
 const mongoose = require("mongoose");
 mongoose
@@ -19,18 +19,9 @@ mongoose
 app.use(express.static("public"));
 
 app.use(express.urlencoded({ extended: true }));
-
 app.use(helmet());
-
 app.use(morgan("tiny"));
-app.use((req, res, next) => {
-  console.log("logging....");
-  next();
-});
-app.use((req, res, next) => {
-  console.log("authenticating.....");
-  next();
-});
+app.use("/login", login);
 app.use("/users", users);
 app.use("/events", event);
 
