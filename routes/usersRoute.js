@@ -8,7 +8,7 @@ const {
 const express = require("express");
 const authentication = require("./authentication");
 const app = express.Router();
-const dev = require("debug")("development");
+
 app.use(express.json());
 
 app.get("/:id", (req, res) => {
@@ -29,16 +29,19 @@ app.post("/", authentication, (req, res) => {
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.put("/:id", (req, res) => {
+app.put("/:id", authentication, (req, res) => {
   updateInDB(req.body, req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.delete("/:id", (req, res) => {
+app.delete("/:id", authentication, (req, res) => {
   deleteFromDB(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
+});
+app.get("/:id/profil", authentication, async (req, res) => {
+  if (req.user._id) res.send(req.user._id);
 });
 
 module.exports = app;

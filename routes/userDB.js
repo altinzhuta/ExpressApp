@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const config = require("config");
-
+const jwt = require("jsonwebtoken");
 const { eventSchema } = require("./eventDB");
-const dev = require("debug")("development");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
@@ -34,7 +33,10 @@ const userSchema = new mongoose.Schema({
     },
   },
 });
-
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, config.get("webTokenSalt"));
+  return token;
+};
 const User = mongoose.model("users", userSchema);
 
 async function createUserInDB(req) {
