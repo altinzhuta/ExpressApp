@@ -2,5 +2,7 @@
   "name": "Express Web App",
   "server": "localhost:3000",
   "salt": 10,
-  "webTokenSalt": "jwtPrivate"
+  "webTokenSalt": "jwtPrivate",
+  "serverPort": "3000",
+  "mongodb": "mongodb://localhost/localhost"
 }

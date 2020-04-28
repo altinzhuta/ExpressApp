@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   inventory: Array,
   price: Number,
   events: [eventSchema],
-  admin: Boolean,
+  isAdmin: Boolean,
   discount: {
     type: Number,
     required: function () {
@@ -34,7 +34,10 @@ const userSchema = new mongoose.Schema({
   },
 });
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, config.get("webTokenSalt"));
+  const token = jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    config.get("webTokenSalt")
+  );
   return token;
 };
 const User = mongoose.model("users", userSchema);

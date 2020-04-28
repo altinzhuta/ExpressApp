@@ -5,8 +5,10 @@ const {
   updateInDB,
   createUserInDB,
 } = require("./userDB");
+
 const express = require("express");
 const authentication = require("./authentication");
+const adminCheck = require("./adminCheck");
 const app = express.Router();
 
 app.use(express.json());
@@ -35,12 +37,12 @@ app.put("/:id", authentication, (req, res) => {
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.delete("/:id", authentication, (req, res) => {
+app.delete("/:id", [authentication, adminCheck], (req, res) => {
   deleteFromDB(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
-app.get("/:id/profil", authentication, async (req, res) => {
+app.get("/:id/profil", authentication, (req, res) => {
   if (req.user._id) res.send(req.user._id);
 });
 

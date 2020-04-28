@@ -2,31 +2,13 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
     <script src="jquery-3.5.0.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      .carousel-inner img {
-        width: 100%;
-        height: 100%;
-      }
-      .carousel-inner .carousel-item {
-        transition: -webkit-transform 2s ease;
-        transition: transform 2s ease;
-        transition: transform 2s ease, -webkit-transform 2s ease;
-      }
-
-      #captionOverImage {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-        background-color: hsla(207, 80%, 72%, 0.048);
-      }
-    </style>
+    <style></style>
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
       <ul class="navbar-nav">
         <li class="nav-item active">
@@ -40,6 +22,25 @@
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+        <li class="nav-item">
+          <form>
+            <input
+              type="text"
+              id="email"
+              class="fadeIn second"
+              name="email"
+              placeholder="email"
+            />
+            <input
+              type="text"
+              id="password"
+              class="fadeIn third"
+              name="password"
+              placeholder="password"
+            />
+            <input type="submit" class="fadeIn fourth" value="Log In" />
+          </form>
         </li>
       </ul>
     </nav>
@@ -92,44 +93,7 @@
         </div>
         <div class="carousel-item">
           <img src="vulkan.jpg" alt="Event" width="1100" height="500" />
-          <div class="wrapper fadeInDown">
-            <div id="formContent">
-              <!-- Tabs Titles -->
 
-              <!-- Icon -->
-              <div class="fadeIn first">
-                <img
-                  src="http://danielzawadzki.com/codepen/01/icon.svg"
-                  id="icon"
-                  alt="User Icon"
-                />
-              </div>
-
-              <!-- Login Form -->
-              <form>
-                <input
-                  type="text"
-                  id="login"
-                  class="fadeIn second"
-                  name="login"
-                  placeholder="login"
-                />
-                <input
-                  type="text"
-                  id="password"
-                  class="fadeIn third"
-                  name="login"
-                  placeholder="password"
-                />
-                <input type="submit" class="fadeIn fourth" value="Log In" />
-              </form>
-
-              <!-- Remind Passowrd -->
-              <div id="formFooter">
-                <a class="underlineHover" href="#">Forgot Password?</a>
-              </div>
-            </div>
-          </div>
           <div class="carousel-caption">
             <h3 id="h3_2"></h3>
             <p id="p2"></p>
