@@ -7,7 +7,10 @@ const mongoose = require("mongoose");
 require("./routs")(app);
 
 mongoose
-  .connect(config.get("mongodb"))
+  .connect(config.get("mongodb"), {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => dev(`db connection with: ${config.get("mongodb")}`))
   .catch((err) => dev("connection failure:" + err.message));
 

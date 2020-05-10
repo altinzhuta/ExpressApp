@@ -3,6 +3,20 @@ let id1 = "5ea4cd2d72ddd01f3413d4ed";
 let id2 = "5e9926bd866a611a7080ee40";
 
 $(document).ready(function () {
+  $("#login").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "/login",
+      data: { email: $("#email").val(), password: $("#password").val() },
+      success: function (data) {
+        alert(data);
+      },
+      error: function (error) {
+        alert(error);
+      },
+    });
+  });
   $("#demo").carousel({
     interval: 6000,
   });

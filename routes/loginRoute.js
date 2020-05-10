@@ -8,6 +8,7 @@ app.use(express.json());
 
 app.post("/", async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
+
   const validPassword = await bcrypt.compare(
     req.body.password,
     user.passwordHash

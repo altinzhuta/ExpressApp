@@ -7,7 +7,9 @@
   transition: transform 2s ease;
   transition: transform 2s ease, -webkit-transform 2s ease;
 }
-
+#login {
+  margin-left: auto;
+}
 #captionOverImage {
   position: absolute;
   top: 50%;
