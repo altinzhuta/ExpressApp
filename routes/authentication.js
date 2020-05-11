@@ -10,7 +10,7 @@ function authentication(req, res, next) {
     req.user = userToken;
     next();
   } catch (error) {
-    res.status(400).send("TokenError");
+    res.status(403).send("Error occured");
   }
 }
 module.exports = authentication;

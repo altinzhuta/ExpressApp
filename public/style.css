@@ -10,11 +10,8 @@
 #login {
   margin-left: auto;
 }
-#captionOverImage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-  background-color: hsla(207, 80%, 72%, 0.048);
+#testButton {
+  margin-right: auto;
+  width: 70px;
+  height: 30px;
 }

@@ -1,35 +1,41 @@
-// id from url todo *****
-let id1 = "5ea4cd2d72ddd01f3413d4ed";
-let id2 = "5e9926bd866a611a7080ee40";
-
 $(document).ready(function () {
+  let usertoken;
+  let currentUser;
   $("#login").submit(function (event) {
     event.preventDefault();
     $.ajax({
       type: "POST",
       url: "/login",
       data: { email: $("#email").val(), password: $("#password").val() },
-      success: function (data) {
-        alert(data);
+      success: function (data, textStatus, request) {
+        usertoken = request.getResponseHeader("x-token");
+        currentUser = data._id;
+        alert("User log in successfull");
       },
       error: function (error) {
-        alert(error);
+        alert(error.statusText);
       },
     });
   });
   $("#demo").carousel({
     interval: 6000,
   });
-  $.ajax({
-    beforeSend: function () {
-      $("#p1").html("Rechne auf Server...");
-    },
-    type: "GET",
-    url: `/events/${id1}`,
-    success: function (data) {
-      $("#p1").html(data.price + " €");
-      $("#h3_1").html(data.name);
-    },
+  $("#testButton").click(function () {
+    $.ajax({
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("x-token", usertoken);
+      },
+      type: "GET",
+      url: `/users/${currentUser}`,
+      success: function (data) {
+        alert(
+          "Name: " + data.name + " ID: " + data._id + " email: " + data.email
+        );
+      },
+      error: function (error) {
+        alert(error.statusText);
+      },
+    });
   });
 
   $.ajax({
