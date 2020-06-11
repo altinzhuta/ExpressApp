@@ -43,12 +43,13 @@ userSchema.methods.generateAuthToken = function () {
 const User = mongoose.model("users", userSchema);
 
 async function createUserInDB(req) {
-  const user = await User.find({ name: req.name });
+  const userName = await User.find({ name: req.name });
+  const userMail = await User.find({ email: req.email });
   const salt = await bcrypt.genSalt(config.get("salt"));
   const passwordHash = await bcrypt.hash(req.password, salt);
 
   return new Promise((result, reject) => {
-    if (!user[0])
+    if (!userName[0] && !userMail[0])
       result(
         new User({
           name: req.name,

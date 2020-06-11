@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.post("/", authentication, (req, res) => {
+app.post("/", (req, res) => {
   createUserInDB(req.body)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));

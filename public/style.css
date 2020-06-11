@@ -7,9 +7,7 @@
   transition: transform 2s ease;
   transition: transform 2s ease, -webkit-transform 2s ease;
 }
-#login {
-  margin-left: auto;
-}
+
 #testButton {
   margin-right: auto;
   width: 70px;
