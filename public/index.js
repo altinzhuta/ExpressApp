@@ -26,6 +26,9 @@ $(document).ready(function () {
     if (usertoken || currentUser == null) alert("log out successful!");
     else alert("logout failed");
   });
+  $("#registerModal").on("hidden.bs.modal", function () {
+    $(":input", this).val("");
+  });
   $("#registerUser").click(function (event) {
     event.preventDefault;
     if ($("#reg_pwd").val() == $("#reg_pwd2").val()) {
@@ -38,13 +41,16 @@ $(document).ready(function () {
           password: $("#reg_pwd").val(),
         },
         success: function (data, textStatus, request) {
+          $("#registerModal").c;
           alert("User created successfully");
         },
         error: function (error) {
           alert(error.statusText);
         },
       });
-    } else alert("check password again");
+    } else {
+      alert("check password again");
+    }
   });
   $("#testButton").click(function () {
     $.ajax({
@@ -89,7 +95,9 @@ $(document).ready(function () {
     },
   });
 });
-
+function hideCarousel() {
+  alert("Test");
+}
 /* 
 
 git init
