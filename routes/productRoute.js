@@ -1,42 +1,41 @@
 const {
-  getEventFromDB,
-  getEventsFromDB,
-  deleteFromDB,
-  updateInDB,
-  createEventInDB,
-} = require("./eventDB");
+  createProduct,
+  getProduct,
+  getAllProducts,
+  deleteProduct,
+  updateProduct,
+} = require("./productDB");
 
 const express = require("express");
 const app = express.Router();
-const dev = require("debug")("development");
 app.use(express.json());
 
 app.get("/:id", (req, res) => {
-  getEventFromDB(req.params.id)
+  getProduct(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.get("/", (req, res) => {
-  getEventsFromDB()
+  getAllProducts()
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.post("/", (req, res) => {
-  createEventInDB(req.body)
+  createProduct(req.body)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.put("/:id", (req, res) => {
-  updateInDB(req.params.id)
+  updateProduct(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.delete("/:id", (req, res) => {
-  deleteFromDB(req.params.id)
+  deleteProduct(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });

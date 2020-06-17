@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const userSchema = require("./userDB");
 
 const eventSchema = new mongoose.Schema({
   name: {
@@ -11,7 +10,10 @@ const eventSchema = new mongoose.Schema({
     default: Date.now,
   },
   location: String,
-  bookedBy: [userSchema],
+  bookedBy: new mongoose.Schema({
+    name: String,
+    email: String,
+  }),
   isValid: Boolean,
   rating: String,
   price: Number,
@@ -42,7 +44,7 @@ async function createEventInDB(req) {
 async function getEventsFromDB() {
   return new Promise((result, reject) => {
     result(Event.find({}));
-    reject(new Error("Error no events found"));
+    reject(new Error("Error no events"));
   });
 }
 
@@ -86,5 +88,4 @@ module.exports = {
   deleteFromDB,
   updateInDB,
   createEventInDB,
-  eventSchema,
 };

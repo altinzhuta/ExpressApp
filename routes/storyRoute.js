@@ -1,42 +1,41 @@
 const {
-  getEventFromDB,
-  getEventsFromDB,
-  deleteFromDB,
-  updateInDB,
-  createEventInDB,
-} = require("./eventDB");
+  createStory,
+  getStory,
+  getStories,
+  updateStory,
+  deleteStory,
+} = require("./storyDB");
 
 const express = require("express");
 const app = express.Router();
-const dev = require("debug")("development");
 app.use(express.json());
 
 app.get("/:id", (req, res) => {
-  getEventFromDB(req.params.id)
+  getStory(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.get("/", (req, res) => {
-  getEventsFromDB()
+  getStories()
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.post("/", (req, res) => {
-  createEventInDB(req.body)
+  createStory(req.body)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.put("/:id", (req, res) => {
-  updateInDB(req.params.id)
+  updateStory(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
 app.delete("/:id", (req, res) => {
-  deleteFromDB(req.params.id)
+  deleteStory(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });

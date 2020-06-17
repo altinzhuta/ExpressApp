@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const config = require("config");
 const jwt = require("jsonwebtoken");
-const { eventSchema } = require("./eventDB");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
@@ -24,7 +23,10 @@ const userSchema = new mongoose.Schema({
   passwordHash: String,
   inventory: Array,
   price: Number,
-  events: [eventSchema],
+  events: new mongoose.Schema({
+    name: String,
+    location: String,
+  }),
   isAdmin: Boolean,
   discount: {
     type: Number,
@@ -115,5 +117,4 @@ module.exports = {
   deleteFromDB,
   updateInDB,
   createUserInDB,
-  userSchema,
 };

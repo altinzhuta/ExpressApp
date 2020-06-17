@@ -1,6 +1,6 @@
+let usertoken;
+let currentUser;
 $(document).ready(function () {
-  let usertoken;
-  let currentUser;
   $("#login").submit(function (event) {
     event.preventDefault();
     $.ajax({
@@ -84,19 +84,178 @@ $(document).ready(function () {
       $("#h3_3").html("third Position");
     },
   });
-
+});
+function showMyStories() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid");
+  $("#demo").append("<div class='media' id='story'></div>");
+  $("#story").append("<div class='media-body' id='storyBody'></div>");
+  $("#storyBody").append(`<p> ${usertoken} </p>`);
+}
+function showAllEvents() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid'");
   $.ajax({
     beforeSend: function () {},
     type: "GET",
-    url: `/events`,
+    url: "/events",
     success: function (data) {
-      $("#h3_2").html("Second position");
-      $("#p2").html("Seconde description");
+      let eventArray = data;
+      for (let i = 0; i < eventArray.length; i++) {
+        $("#demo").append(
+          `<h1> ${
+            eventArray[i].name +
+            eventArray[i].location +
+            eventArray[i].price +
+            eventArray[i].rating
+          } </h1>`
+        );
+      }
     },
   });
-});
-function hideCarousel() {
-  alert("Test");
+}
+function showMyEvents() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid'");
+  $.ajax({
+    beforeSend: function () {},
+    type: "GET",
+    url: `/users/${currentUser}`,
+    success: function (data) {
+      let eventArray = [];
+      eventArray = data;
+
+      for (let i = 0; i < eventArray.length; i++) {
+        $("#demo").append(
+          `<h1> ${
+            eventArray[i].name +
+            eventArray[i].location +
+            eventArray[i].price +
+            eventArray[i].rating
+          } </h1>`
+        );
+      }
+    },
+  });
+}
+function showMyFriends() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid'");
+  $.ajax({
+    beforeSend: function () {},
+    type: "GET",
+    url: "/events",
+    success: function (data) {
+      let eventArray = data;
+      for (let i = 0; i < eventArray.length; i++) {
+        $("#demo").append(
+          `<h1> ${
+            eventArray[i].name +
+            eventArray[i].location +
+            eventArray[i].price +
+            eventArray[i].rating
+          } </h1>`
+        );
+      }
+    },
+  });
+}
+function showMyUpcomingEvents() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid'");
+  $.ajax({
+    beforeSend: function () {},
+    type: "GET",
+    url: "/events",
+    success: function (data) {
+      let eventArray = [];
+      eventArray = data;
+
+      for (let i = 0; i < eventArray.length; i++) {
+        $("#demo").append(
+          `<h1> ${
+            eventArray[i].name +
+            eventArray[i].location +
+            eventArray[i].price +
+            eventArray[i].rating
+          } </h1>`
+        );
+      }
+    },
+  });
+}
+
+function showBestOffers() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid'");
+  $.ajax({
+    beforeSend: function () {},
+    type: "GET",
+    url: "/events",
+    success: function (data) {
+      let eventArray = [];
+      eventArray = data;
+
+      for (let i = 0; i < eventArray.length; i++) {
+        $("#demo").append(
+          `<h1> ${
+            eventArray[i].name +
+            eventArray[i].location +
+            eventArray[i].price +
+            eventArray[i].rating
+          } </h1>`
+        );
+      }
+    },
+  });
+}
+function showLikedStories() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid'");
+  $.ajax({
+    beforeSend: function () {},
+    type: "GET",
+    url: "/events",
+    success: function (data) {
+      let eventArray = [];
+      eventArray = data;
+
+      for (let i = 0; i < eventArray.length; i++) {
+        $("#demo").append(
+          `<h1> ${
+            eventArray[i].name +
+            eventArray[i].location +
+            eventArray[i].price +
+            eventArray[i].rating
+          } </h1>`
+        );
+      }
+    },
+  });
+}
+function showGiftshop() {
+  $("#demo").empty();
+  $("#demo").addClass("class='container-fluid'");
+  $.ajax({
+    beforeSend: function () {},
+    type: "GET",
+    url: "/events",
+    success: function (data) {
+      let eventArray = [];
+      eventArray = data;
+
+      for (let i = 0; i < eventArray.length; i++) {
+        $("#demo").append(
+          `<h1> ${
+            eventArray[i].name +
+            eventArray[i].location +
+            eventArray[i].price +
+            eventArray[i].rating
+          } </h1>`
+        );
+      }
+    },
+  });
 }
 /* 
 
