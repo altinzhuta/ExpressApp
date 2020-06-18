@@ -67,20 +67,20 @@ async function getUsersFromDB() {
   const users = await User.find({});
   return new Promise((result, reject) => {
     if (users.length > 0) result(users);
-    else reject(new Error("either empty or db offline"));
+    else reject(new Error("no Users"));
   });
 }
 
 async function getUserFromDB(id) {
   const users = await User.findById(id);
   return new Promise((result, reject) => {
-    if (!users) reject(new Error("Error deleting document in DB"));
+    if (!users) reject(new Error("user not found"));
     else result(users);
   });
 }
 
 async function deleteFromDB(id) {
-  let oldUser = await User.findById(id);
+  const oldUser = await User.findById(id);
   return new Promise((result, reject) => {
     if (!oldUser) reject(new Error("error deleting document in DB"));
     else result(User.findByIdAndRemove(id));
