@@ -4,9 +4,10 @@ const {
   getStories,
   updateStory,
   deleteStory,
-} = require("./storyDB");
+} = require("../db/storyDB");
 
 const express = require("express");
+const authentication= require("./authentication");
 const app = express.Router();
 app.use(express.json());
 
@@ -28,13 +29,13 @@ app.post("/", (req, res) => {
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.put("/:id", (req, res) => {
-  updateStory(req.params.id)
+app.put("/:id", authentication,(req, res) => {
+  updateStory(req.body,req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.delete("/:id", (req, res) => {
+app.delete("/:id",authentication, (req, res) => {
   deleteStory(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));

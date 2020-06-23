@@ -4,7 +4,7 @@ const login = require("./routes/loginRoute");
 const users = require("./routes/usersRoute");
 const event = require("./routes/eventRoute");
 const products = require("./routes/productRoute");
-//const stories = require("./routes/storyRoute");
+const stories = require("./routes/storyRoute");
 
 function connectRouts(app) {
   app.use(helmet());
@@ -14,7 +14,7 @@ function connectRouts(app) {
   app.use("/users", users);
   app.use("/events", event);
   app.use("/products", products);
-  // app.use("/stories", stories);
+  app.use("/stories", stories);
 }
 
 module.exports = connectRouts;

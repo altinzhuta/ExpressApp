@@ -4,7 +4,7 @@ const {
   deleteFromDB,
   updateInDB,
   createUserInDB,
-} = require("./userDB");
+} = require("../db/userDB");
 
 const express = require("express");
 const authentication = require("./authentication");
@@ -13,7 +13,7 @@ const app = express.Router();
 
 app.use(express.json());
 
-app.get("/:id", (req, res) => {
+app.get("/:id" ,(req, res) => {
   getUserFromDB(req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));

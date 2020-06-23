@@ -239,18 +239,18 @@ function showGiftshop() {
   $.ajax({
     beforeSend: function () {},
     type: "GET",
-    url: "/events",
+    url: "/products",
     success: function (data) {
-      let eventArray = [];
-      eventArray = data;
+      let products = [];
+      products = data;
 
-      for (let i = 0; i < eventArray.length; i++) {
+      for (let i = 0; i < products.length; i++) {
         $("#demo").append(
           `<h1> ${
-            eventArray[i].name +
-            eventArray[i].location +
-            eventArray[i].price +
-            eventArray[i].rating
+            products[i].name +
+            products[i].location +
+            products[i].price +
+            products[i].rating
           } </h1>`
         );
       }

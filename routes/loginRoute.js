@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express.Router();
 const bcrypt = require("bcrypt");
-const { userSchema } = require("./userDB");
+const { userSchema } = require("../db/userDB");
 const mongoose = require("mongoose");
 const User = mongoose.model("users", userSchema);
 app.use(express.json());
