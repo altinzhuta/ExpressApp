@@ -18,7 +18,7 @@ const eventSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "stories"
   }],
-
+  timesBooked:Number,
   rating: String,
   price: Number,
 
@@ -37,6 +37,7 @@ async function createEventInDB(req) {
         location: req.location,
         bookedBy: req.bookedBy,
         stories: req.stories,
+        timesBooked:req.timesBooked,
         rating: req.rating,
         price: req.price
       }).save()
@@ -68,15 +69,23 @@ async function deleteFromDB(id) {
   });
 }
 async function updateInDB(req, id) {
-  const event = await Event.findById(id);
-  const keys= Object.keys(req);
+  
+  let event = await Event.findById(id);
+  let keys= Object.keys(req);
 
   return new Promise((result, reject) => {
     if (!event) reject(new Error("Error updating document in DB"));
     else
     for( const key of keys ){
-      if(key!=null){
-        event.key=req.key;
+      if(Array.isArray(event[key])&&key!=null){
+        let combined= event[key].concat(req[key]);
+        event[key]=combined;
+
+      }else if(key=="bookedBy"){
+        event.timesBooked++
+      }
+      else if(!Array.isArray(event[key])&&key!=null){
+        event[key]=req[key];
       }
     }
       result(event.save())
@@ -90,4 +99,5 @@ module.exports = {
   deleteFromDB,
   updateInDB,
   createEventInDB,
+  eventSchema
 };

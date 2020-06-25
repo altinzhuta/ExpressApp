@@ -29,7 +29,16 @@ async function createProduct(req) {
     else reject(new Error("Already there, did you mean to update?"));
   });
 }
+async function searchProduct(sname){
+  const productQuery= await Product.find({name: { $regex: sname }});
+  
+  return new Promise((result,reject)=>{
+    if(productQuery.length>0) result((productQuery));
+    else reject(new Error("no product"));
+  })
 
+
+}
 async function getProduct(id) {
   const product = await Product.findById(id);
   return new Promise((result, reject) => {
@@ -53,16 +62,19 @@ async function deleteProduct(id) {
   });
 }
 async function updateProduct(req, id) {
-  const product = await Product.findById(id);
-  const keys= Object.keys(req);
+  let product = await Product.findById(id);
+  let keys= Object.keys(req);
 
   return new Promise((result, reject) => {
     if (!product) reject(new Error("Error updating document in DB"));
     else
-    for( const key of keys ){
-      if(key!=null){
-        product.key=req.key;
+    for( let key of keys ){
+      if(key!=null&&req[key]!=1&&req[key]!=""){
+        product[key]=req[key];
         
+      }else if(key=="stock"&&req.stock==1){
+       
+        product[key]--;
       }
     }
       result(product.save())
@@ -76,4 +88,6 @@ module.exports = {
   getAllProducts,
   deleteProduct,
   updateProduct,
+  searchProduct,
+  productSchema
 };

@@ -24,14 +24,14 @@ app.get("/", (req, res) => {
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.post("/", (req, res) => {
+app.post("/", [authentication,adminCheck],(req, res) => {
   createEventInDB(req.body)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });
 
-app.put("/:id", [authentication,adminCheck],(req, res) => {
-  updateInDB(req.params.id)
+app.put("/:id", authentication,(req, res) => {
+  updateInDB(req.body,req.params.id)
     .then((result) => res.status(200).send(result))
     .catch((err) => res.status(400).send(err.message));
 });

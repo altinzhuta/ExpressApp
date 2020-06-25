@@ -9,10 +9,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 3,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
   email: {
     type: String,
     required: true,
@@ -21,23 +17,23 @@ const userSchema = new mongoose.Schema({
   passwordHash: String,
   inventory: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref:"products"
+    ref: "products"
   }],
-  price: Number,
-  friends:[{
+ 
+  friends: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref:"users"
+    ref: "users"
   }],
   events: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref:"events"
+    ref: "events"
   }],
   isAdmin: {
-  type: Boolean,
-  default:false
+    type: Boolean,
+    default: false
   },
-  premiumUser:Boolean
   
+
 });
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
@@ -92,19 +88,56 @@ async function deleteFromDB(id) {
 }
 
 async function updateInDB(req, id) {
-  const user = await User.findById(id);
-  const keys= Object.keys(req);
+  let user = await User.findById(id);
+  const keys = Object.keys(req);
 
   return new Promise((result, reject) => {
     if (!user) reject(new Error("Error updating document in DB"));
     else
-    for( const key of keys ){
-      if(key!=null){
-        user.key=req.key;
+      for (const key of keys) {
+        if (key == "isAdmin") {
+          continue;
+        }
+        else if (Array.isArray(user[key]) ) {
+          let combined = user[key].concat(req[key]);
+          user[key] = combined;
+        } else if (req[key]!=""&& key != null) {
+          user[key] = req[key];
+        }
       }
-    }
-      result(user.save())
-      
+    result(user.save())
+
+  });
+}
+async function getProfile(id) {
+  const userProfile = await User.findById(id);
+  return new Promise((result, reject) => {
+    if (userProfile) result(userProfile);
+    else reject(new Error("Error occured getting profile"));
+  })
+}
+async function updateProfile(req, id) {
+  let user = await User.findById(id);
+  const keys = Object.keys(req);
+
+  return new Promise((result, reject) => {
+   
+    if (!user) reject(new Error("Error updating document in DB"));
+    else
+      for (let key of keys) {
+        console.log(key)
+        if (key == "isAdmin") {
+          continue;
+        }
+        if (Array.isArray(user[key]) && key != null) {
+          let combined = user[key].concat(req[key]);
+          user[key] = combined;
+        } else if (key!="" && key != null) {
+          user[key] = req[key];
+        }
+      }
+    result(user.save())
+
   });
 }
 
@@ -114,5 +147,7 @@ module.exports = {
   deleteFromDB,
   updateInDB,
   createUserInDB,
+  getProfile,
+  updateProfile,
   userSchema
 };

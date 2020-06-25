@@ -18,7 +18,8 @@ const storySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref:"events"    
   },
-  likes: Number
+  likes: Number,
+  text:String
 
 });
 
@@ -56,15 +57,21 @@ async function getStories() {
   })
 }
 async function updateStory(req,id) {
-  const story = await Story.findById(id);
+  let story = await Story.findById(id);
   const keys= Object.keys(req);
 
   return new Promise((result, reject) => {
     if (!story) reject(new Error("Error updating document in DB"));
     else
     for( const key of keys ){
-      if(key!=null){
-        story.key=req.key;
+        if(Array.isArray(event[key])&&key!=null){
+          let combined= event[key].concat(req[key]);
+          event[key]=combined;
+        }else if(!Array.isArray(event[key])&&key!=null){
+          event[key]=req[key];
+        }
+      else if(key=="liked"){
+        story.likes++;
         
       }
     }
@@ -86,4 +93,5 @@ module.exports = {
   getStories,
   updateStory,
   deleteStory,
+  storySchema
 };

@@ -2,14 +2,43 @@
   width: 100%;
   height: 100%;
 }
-.carousel-inner .carousel-item {
-  transition: -webkit-transform 2s ease;
-  transition: transform 2s ease;
-  transition: transform 2s ease, -webkit-transform 2s ease;
-}
 
-#testButton {
-  margin-right: auto;
-  width: 70px;
-  height: 30px;
+
+#alleventsImage{
+  width: 100px;
+  height: 100px;
+}
+body {
+  background-image: url('./images/clouds1.jpg');
+  background-size:cover;
+  border: 5px solid #555;
+}
+#imageHolder{
+  text-align:center;
+  background-image:url("./images/clouds2.jpg");
+  background-size:cover;
+  border: 5px solid #555;
+}
+#spotEvent{
+  text-align:center;
+  background-image:url("./images/sand.jpg");
+  background-size:cover;
+  border: 5px solid #555;
+}
+#eventCatalougeDiv{
+  width: 50%; 
+  margin: 0 auto; 
+  text-align: left;
+}
+p {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: rgb(0, 0, 0);
+  background-color:rgba(196, 204, 233, 0.452);
+ }
+ h1{
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: xx-large;
+ }
+ img {
+  border: 5px solid #555;
 }

@@ -6,15 +6,17 @@ const event = require("./routes/eventRoute");
 const products = require("./routes/productRoute");
 const stories = require("./routes/storyRoute");
 
+
 function connectRouts(app) {
   app.use(helmet());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static("public"));
-  app.use("/login", login);
-  app.use("/users", users);
-  app.use("/events", event);
-  app.use("/products", products);
-  app.use("/stories", stories);
+  app.use("/api/login", login);
+  app.use("/api/users", users);
+  app.use("/api/events", event);
+  app.use("/api/products", products);
+  app.use("/api/stories", stories);
+ 
 }
 
 module.exports = connectRouts;
