@@ -69,12 +69,13 @@ async function updateProduct(req, id) {
     if (!product) reject(new Error("Error updating document in DB"));
     else
     for( let key of keys ){
-      if(key!=null&&req[key]!=1&&req[key]!=""){
+      if(key!=null&&req[key]!=1&&req[key]!=""&&req[key]!=-1){
         product[key]=req[key];
         
       }else if(key=="stock"&&req.stock==1){
-       
         product[key]--;
+      }else if(req[key]==-1){
+        product[key]++
       }
     }
       result(product.save())

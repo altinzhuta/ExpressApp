@@ -125,11 +125,20 @@ async function updateProfile(req, id) {
     if (!user) reject(new Error("Error updating document in DB"));
     else
       for (let key of keys) {
-        console.log(key)
+       
         if (key == "isAdmin") {
           continue;
+        }else if(Array.isArray(user[key]) && key != null && req.delete){
+            for(let i=0;i<user.inventory.length;i++){
+              if(user.inventory[i]==req.inventory[0]){
+                
+                let removed = user.inventory.splice(user.inventory.indexOf(user.inventory[i]),1);
+               
+                break;
+              }
+            }
         }
-        if (Array.isArray(user[key]) && key != null) {
+        else if (Array.isArray(user[key]) && key != null && !req.delete) {
           let combined = user[key].concat(req[key]);
           user[key] = combined;
         } else if (key!="" && key != null) {

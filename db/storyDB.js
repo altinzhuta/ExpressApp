@@ -35,7 +35,8 @@ async function createStory(req) {
         author:req.author,
         liked:req.liked,
         event:req.event,
-        likes:req.likes
+        likes:req.likes,
+        text:req.text
 
     }).save());
     else reject(new Error("error creating story"));
@@ -64,16 +65,18 @@ async function updateStory(req,id) {
     if (!story) reject(new Error("Error updating document in DB"));
     else
     for( const key of keys ){
-        if(Array.isArray(event[key])&&key!=null){
-          let combined= event[key].concat(req[key]);
-          event[key]=combined;
-        }else if(!Array.isArray(event[key])&&key!=null){
-          event[key]=req[key];
+        if(Array.isArray(story[key])&&req.likes==1&&!story.liked.includes(req.liked[0])){
+          let combined= story[key].concat(req[key]);
+          story[key]=combined;
+          story.likes++
+        }else if((req[key]!=""&&req.likes!=1)||req.text!=null){
+          story[key]=req[key];
+
         }
-      else if(key=="liked"){
-        story.likes++;
-        
-      }
+        else if(key=="liked"&&req.likes==1&&story.liked.includes(req.liked[0])){
+          reject(new Error("user already liked story"))
+        }
+      
     }
       result(story.save())
       

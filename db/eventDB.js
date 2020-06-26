@@ -10,16 +10,13 @@ const eventSchema = new mongoose.Schema({
     default: Date.now,
   },
   location: String,
-  bookedBy: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "users"
-  }],
+  
   stories: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "stories"
   }],
   timesBooked:Number,
-  rating: String,
+  rating: Number,
   price: Number,
 
 
@@ -81,10 +78,16 @@ async function updateInDB(req, id) {
         let combined= event[key].concat(req[key]);
         event[key]=combined;
 
-      }else if(key=="bookedBy"){
-        event.timesBooked++
+      }else if(req.timesBooked==1){
+        event.timesBooked++;
       }
-      else if(!Array.isArray(event[key])&&key!=null){
+      else if(key=="rating"){
+        
+        let newRating= (Number(req[key])/event.timesBooked)+event[key];
+       event.rating=newRating
+
+      }
+      else if(!Array.isArray(event[key])&&key!=null&&key!="rating"&&req.timesBooked!=1){
         event[key]=req[key];
       }
     }

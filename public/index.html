@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <!-- Libraries wie Bootstrap und JQuery werden hier eingebunden -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css" />
   <script src="jquery-3.5.0.js"></script>
@@ -17,18 +18,22 @@
 <body>
   <div class="navbar navbar-expand-sm bg-primary navbar-dark">
     <ul class="navbar-nav ml-auto">
+
       <li class="nav-item">
         <div class="dropdown">
+          <!-- Button um das Menu für den Admin (product/user editierung) zu öffnen welches nur sichtbar ist durch eine erfolgreiche anmeldung durch einen Admin -->
           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="sadminButton">Admin</button>
           <div id="adminDropdown" class="dropdown-menu">
             <a class="dropdown-item" href="javascript:editUser()">edit user</a>
             <a class="dropdown-item" href="javascript:editProduct()">edit product</a>
+            
           </div>
         </div>
       </li>
       <li class="nav-item">
         <div class="dropdown">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Search products</button>
+          <!-- Button um den Input der Productsuche zu öffnen -->
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">SearchProducts</button>
           <div id="searchDropdown" class="dropdown-menu">
             <input type="text" class="dropdown-item" placeholder="Search product" id="search" >
             
@@ -39,19 +44,23 @@
       <li class="nav-item">
         <div class="container">
           <div class="dropdown">
+
+            <!-- Button um das Dropdown Menu für das Angebot des Shops zu öffnen -->
+
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-              Event Management
+              EventManagement
             </button>
             <div class="dropdown-menu">
               <h5 class="dropdown-header">My Area</h5>
               <a class="dropdown-item" href="javascript:showMyStories()">MyStories</a>
+              <a class="dropdown-item" href="javascript:showInventory()">Inventory</a>
               <a class="dropdown-item" href="javascript:showMyEvents()">MyEvents</a>
-              <a class="dropdown-item" href="javascript:showMyFriends()">Friendlist</a>
+              <a class="dropdown-item" href="javascript:showMyFriends()">PeopleFollowed</a>
               <h5 class="dropdown-header">Server Area</h5>
               <a class="dropdown-item" href="javascript:showAllEvents()">AllEvents</a>
               <a class="dropdown-item" href="javascript:showBestOffers()">BestOffers</a>
-              <a class="dropdown-item" href="javascript:showLikedStories()">BestAdventurersStories</a>
-              <a class="dropdown-item" href="javascript:showProductShop()">Product Shop</a>
+              <a class="dropdown-item" href="javascript:showAllStories()">AllStories</a>
+              <a class="dropdown-item" href="javascript:showProductShop()">ProductShop</a>
             </div>
           </div>
         </div>
@@ -59,11 +68,14 @@
       <li class="nav-item">
         <div class="container"></div>
         <div class="dropdown"></div>
+
+        <!-- Button um das Dropdown Menu für login oder regestrierung zu öffnen  -->
+
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-          Account Management
+          AccountManagement
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <h5 class="dropdown-header">Login or register</h5>
+          <h5 class="dropdown-header">Login/Register</h5>
           
           <input class="dropdown-item" type="text" id="email" name="email" placeholder="email" />
           <input  type="password" id="password" class="fadeIn third dropdown-item" name="password" placeholder="password" />
@@ -71,6 +83,7 @@
            <button  type="button" class="btn btn-warning dropdown-item" id="logout">
             Log out
           </button>
+          <!-- Button um das Modal für die Benutzer regestrierung zu Öffnen  -->
           <button type="button" class="btn btn-light dropdown-item" id="register" data-toggle="modal" data-target="#registerModal">
             Register
           </button>
@@ -79,33 +92,21 @@
       </li>
     </ul>
   </div>
-  <div id="loggedUser"></div>
-  <div id="demo"></div>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-3 col-md-6 bg-success">
-        Footerberreich 1
-      </div>
-      <div class="col-sm-9 col-md-6 bg-warning">
-        Footerberreich 2
-      </div>
-    </div>
+  <div id="demo">
   </div>
 
 
+
+<!-- Modal um einen Benutzer zu regestrieren -->
 <div class="modal" id="registerModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Register user</h4>
         <button type="button" class="close" data-dismiss="modal">
           &times;
         </button>
       </div>
-
-      <!-- Modal body -->
       <div class="modal-body">
         <div class="form-group">
           <label for="usr">Name:</label>
@@ -121,8 +122,6 @@
           <input type="password" class="form-control" id="reg_pwd2" />
         </div>
       </div>
-
-      <!-- Modal footer -->
       <div class="modal-footer">
         <div class="form-group">
           <button type="button" class="btn btn-dark" id="registerUser" data-dismiss="modal">
@@ -136,7 +135,7 @@
     </div>
   </div>
 </div>
-
+<!-- Modal um ein Product zu editieren ---- nur als Admin mit einem json web tonken isAdmin=true wert  -->
 <div class="modal" id="updateProductModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -164,7 +163,7 @@
       <div class="modal-footer">
         <div class="form-group">
           <button type="button" class="btn btn-dark" id="updateProductM" data-dismiss="modal">
-            Update
+            Update/Delete
           </button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">
             Close
@@ -174,7 +173,7 @@
     </div>
   </div>
 </div>
-
+<!-- Modal um ein Benutzer zu editieren ---- nur als Admin mit einem json web token isAdmin=true wert  -->
 <div class="modal" id="updateUserModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -213,6 +212,28 @@
   </div>
 </div>
 
+
+
+
+
+
+
+
 <script src="index.js"></script>
+<script src="./sections/eventSection.js"></script>
+<script src="./sections/storySection.js"></script>
+<script src="./sections/productSection.js"></script>
 </body>
+<!-- Impressum der Webseite  -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-6">
+     Kontakt Informationen 
+    </div>
+    <div class="col-sm-9 col-md-6 ">
+      Sonstige Informationen
+    </div>
+  </div>
+</div>
 </html>
